@@ -1,0 +1,274 @@
+{
+  "general": {
+    "meta": {
+      "tags": "Tagged \"{{ tags }}\"",
+      "page": "Page {{ page }}"
+    },
+    "404": {
+      "title": "Page not found",
+      "subtext": "Drop 02 lands in November. This page isn't part of the collection — but the shop is right this way.",
+      "link": "Back to the shop"
+    },
+    "search": {
+      "no_results_html": "No results found for \"{{ terms }}\". Check the spelling or try a different word.",
+      "results_with_count": {
+        "one": "{{ count }} result",
+        "other": "{{ count }} results"
+      },
+      "search_for": "Search for \"{{ terms }}\"",
+      "placeholder": "Search products",
+      "submit": "Search",
+      "close": "Close search",
+      "view_all": "View all results"
+    },
+    "newsletter": {
+      "heading": "Join the",
+      "heading_italic": "House",
+      "body": "Early access to drops and restock alerts. Nothing else.",
+      "email_placeholder": "Email address",
+      "submit": "Sign up",
+      "success": "You're on the list — Drop 02 first",
+      "error": "Enter a valid email"
+    },
+    "social": {
+      "follow_on": "Follow us on {{ name }}"
+    },
+    "continue_shopping": "Continue shopping",
+    "view_all": "View all",
+    "showing_of_count": "{{ count }} of {{ total }} styles"
+  },
+  "accessibility": {
+    "skip_to_content": "Skip to content",
+    "close": "Close",
+    "menu": "Menu",
+    "open_menu": "Open menu",
+    "close_menu": "Close menu",
+    "cart": "Cart",
+    "account": "Account",
+    "search": "Search",
+    "unit_price_separator": "per",
+    "loading": "Loading…",
+    "star_reviews_info": "{{ rating_value }} out of {{ rating_max }} stars"
+  },
+  "products": {
+    "product": {
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable",
+      "on_sale": "Sale",
+      "new": "New",
+      "low_stock": "Low stock",
+      "add_to_cart": "Add to Cart",
+      "add_to_cart_with_price": "Add to Cart — {{ price }}",
+      "buy_now": "Buy it now",
+      "choose_options": "Choose options",
+      "quantity": {
+        "label": "Qty"
+      },
+      "size_guide": "Size guide",
+      "select_size_first": "Please choose a size first",
+      "size_sold_out": "Size {{ size }} is sold out",
+      "product_sold_out": "This style is sold out",
+      "stock_left": "{{ count }} left in {{ size }}",
+      "select_a_size": "Select a size",
+      "free_shipping_note": "Free shipping over {{ amount }} · 30-day returns",
+      "view_details": "View {{ product_name }}",
+      "colour": "Colour — {{ label }}",
+      "size": "Size",
+      "breadcrumb": "Home",
+      "media": {
+        "gallery_viewer": "Gallery Viewer",
+        "load_image": "Load image {{ index }} in gallery view",
+        "image_available": "Image {{ index }} is now available in gallery view"
+      },
+      "no_description": "No description available for this product yet."
+    }
+  },
+  "collections": {
+    "general": {
+      "all_products": "All",
+      "no_matches": "Nothing in this filter yet",
+      "no_matches_html": "Drop 02 lands in November. Join the house below and we'll tell you first.",
+      "clear_filters": "Show everything",
+      "items_with_count": {
+        "one": "{{ count }} style",
+        "other": "{{ count }} styles"
+      },
+      "sort_button": "Sort",
+      "filter_button": "Filter",
+      "clear": "Clear",
+      "clear_all": "Clear all",
+      "from_lowercase": "from"
+    },
+    "sorting": {
+      "featured": "Featured",
+      "best_selling": "Best selling",
+      "az": "Alphabetically, A-Z",
+      "za": "Alphabetically, Z-A",
+      "price_ascending": "Price, low to high",
+      "price_descending": "Price, high to low",
+      "date_ascending": "Oldest",
+      "date_descending": "Newest",
+      "created_descending": "Newest"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Your bag",
+      "title_with_count": {
+        "one": "Your bag ({{ count }})",
+        "other": "Your bag ({{ count }})"
+      },
+      "empty": "Your bag is empty",
+      "empty_body": "Drop 01 is live and numbered. Pick your piece before the run closes.",
+      "shop_the_drop": "Shop the drop",
+      "remove": "Remove",
+      "subtotal": "Subtotal",
+      "shipping": "Shipping",
+      "shipping_free": "Free",
+      "total": "Total",
+      "checkout": "Checkout",
+      "close": "Close",
+      "free_shipping_away_html": "{{ amount }} away from free shipping",
+      "free_shipping_unlocked": "You've unlocked free shipping",
+      "view_cart": "View bag",
+      "update": "Update",
+      "increase_quantity": "Increase quantity of {{ title }}",
+      "decrease_quantity": "Decrease quantity of {{ title }}",
+      "error": "Something went wrong — please try again.",
+      "added": "{{ title }} added to your bag"
+    },
+    "label": {
+      "title": "Product",
+      "price": "Price",
+      "quantity": "Quantity",
+      "total": "Total"
+    }
+  },
+  "customer": {
+    "account": {
+      "title": "Account",
+      "details": "Account details",
+      "view_addresses": "View addresses",
+      "return": "Return to Account details"
+    },
+    "account_fallback": "Account",
+    "log_in": "Log in",
+    "log_out": "Log out",
+    "create_account": "Create account",
+    "orders": {
+      "title": "Order history",
+      "order_number": "Order",
+      "date": "Date",
+      "payment_status": "Payment status",
+      "fulfillment_status": "Fulfillment status",
+      "total": "Total",
+      "none": "You haven't placed any orders yet."
+    },
+    "order": {
+      "title": "Order {{ name }}",
+      "date_html": "Placed on {{ date }}",
+      "cancelled_html": "Order Cancelled on {{ date }}",
+      "cancelled_reason": "Reason: {{ reason }}",
+      "billing_address": "Billing Address",
+      "payment_status": "Payment Status",
+      "shipping_address": "Shipping Address",
+      "fulfillment_status": "Fulfillment Status",
+      "discount": "Discount",
+      "shipping": "Shipping",
+      "tax": "Tax",
+      "product": "Product",
+      "sku": "SKU",
+      "price": "Price",
+      "quantity": "Quantity",
+      "total": "Total",
+      "fulfilled_at_html": "Fulfilled {{ date }}",
+      "track_shipment": "Track shipment",
+      "subtotal": "Subtotal"
+    },
+    "login_page": {
+      "title": "Login",
+      "email": "Email",
+      "password": "Password",
+      "forgot_password": "Forgot your password?",
+      "sign_in": "Sign in",
+      "guest_continue": "Continue as a guest",
+      "create_account": "Create account",
+      "cancel": "Cancel"
+    },
+    "register": {
+      "title": "Create account",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Create"
+    },
+    "recover_password": {
+      "title": "Reset your password",
+      "subtext": "We will send you an email to reset your password.",
+      "success": "We've sent you an email with a link to update your password.",
+      "submit": "Submit"
+    },
+    "reset_password": {
+      "title": "Reset account password",
+      "subtext": "Enter a new password",
+      "password": "Password",
+      "password_confirm": "Confirm password",
+      "submit": "Reset password"
+    },
+    "activate_account": {
+      "title": "Activate account",
+      "subtext": "Create your password to activate your account.",
+      "password": "Password",
+      "password_confirm": "Confirm password",
+      "submit": "Activate account",
+      "decline": "Decline invitation"
+    },
+    "addresses": {
+      "title": "Addresses",
+      "default": "Default",
+      "add_new": "Add a new address",
+      "edit_address": "Edit address",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "company": "Company",
+      "address1": "Address 1",
+      "address2": "Address 2",
+      "city": "City",
+      "country": "Country/region",
+      "province": "Province",
+      "zip": "Postal/Zip code",
+      "phone": "Phone",
+      "set_default": "Set as default address",
+      "add": "Add address",
+      "update": "Update address",
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "delete": "Delete",
+      "delete_confirm": "Are you sure you wish to delete this address?"
+    }
+  },
+  "contact": {
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone number",
+      "comment": "Comment",
+      "send": "Send",
+      "post_success": "Thanks for reaching out. We'll get back to you as soon as possible.",
+      "title": "Contact us"
+    }
+  },
+  "gift_cards": {
+    "issued": {
+      "title_html": "Here's your {{ value }} gift card for {{ shop }}!",
+      "subtext": "Your gift card",
+      "shop_link": "Continue shopping",
+      "add_to_apple_wallet": "Add to Apple Wallet",
+      "expired": "Expired",
+      "copy_code": "Copy code",
+      "expiration_date": "Expires {{ expires_on }}",
+      "how_to_redeem": "Use this code at checkout to redeem your gift card"
+    }
+  }
+}

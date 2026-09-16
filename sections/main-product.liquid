@@ -1,0 +1,156 @@
+{%- liquid
+  assign selected_variant = product.selected_or_first_available_variant
+  assign free_ship_amount = settings.cart_free_shipping_threshold | times: 100 | money
+-%}
+
+<div id="MainProduct" class="section-pad">
+  <div class="page-width">
+
+    <div class="product-top">
+      <nav class="breadcrumb font-accent" aria-label="Breadcrumb">
+        <a href="{{ routes.root_url }}">{{ 'products.product.breadcrumb' | t }}</a>
+        <span>/</span>
+        {%- if collection -%}
+          <a href="{{ collection.url }}">{{ collection.title }}</a>
+        {%- else -%}
+          <a href="{{ routes.all_products_collection_url }}">{{ 'collections.general.all_products' | t }}</a>
+        {%- endif -%}
+        <span>/</span>
+        <span aria-current="page">{{ product.title }}</span>
+      </nav>
+      {%- if product.metafields.custom.edition_number != blank and product.metafields.custom.edition_total != blank -%}
+        <div class="font-accent product-edition">No. {{ product.metafields.custom.edition_number }} / {{ product.metafields.custom.edition_total }}</div>
+      {%- elsif product.available == false -%}
+        <div class="font-accent product-edition">{{ 'products.product.sold_out' | t }}</div>
+      {%- endif -%}
+    </div>
+
+    {%- form 'product', product, id: 'ProductForm', class: 'product-layout', data-product-form: '' -%}
+      <input type="hidden" name="id" value="{{ selected_variant.id }}" data-selected-variant-id>
+
+      <div class="product-layout__gallery">
+        {% render 'product-media-gallery', product: product %}
+      </div>
+
+      <div class="product-layout__info">
+        <div class="product-info-panel">
+          <div class="product-info-panel__head">
+            <div class="font-accent product-info-panel__kicker">
+              {{ product.type | default: shop.name }}{% if section.settings.kicker_text != blank %} · {{ section.settings.kicker_text }}{% endif %}
+            </div>
+            <h1 class="font-heading product-info-panel__title">{{ product.title }}</h1>
+            <div data-price-wrapper>
+              {% render 'price', product: product, variant: selected_variant, show_compare: true %}
+            </div>
+          </div>
+
+          {%- if product.description != blank -%}
+            <div class="product-info-panel__description rte">{{ product.description }}</div>
+          {%- else -%}
+            <p class="product-info-panel__description">{{ 'products.product.no_description' | t }}</p>
+          {%- endif -%}
+
+          <hr>
+
+          {% render 'product-variant-picker', product: product, section: section %}
+
+          <div class="product-qty-row">
+            <div class="font-accent">{{ 'products.product.quantity.label' | t }}</div>
+            {% render 'quantity-selector', qty: 1, min: 1, name: 'quantity', item_title: product.title %}
+            <div class="font-accent product-stock-label" data-stock-label>
+              {%- if selected_variant.available == false -%}
+                {{ 'products.product.sold_out' | t }}
+              {%- else -%}
+                {{ 'products.product.select_a_size' | t }}
+              {%- endif -%}
+            </div>
+          </div>
+
+          <div class="product-actions">
+            <button
+              type="submit"
+              name="add"
+              class="btn btn-primary btn-block"
+              data-add-to-cart
+              {% unless product.available %}disabled{% endunless %}
+            >
+              <span data-add-to-cart-text>
+                {%- if product.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
+              </span>
+            </button>
+
+            {{ form | payment_button }}
+
+            <div class="product-shipping-note font-accent">
+              <span class="dot" aria-hidden="true"></span>
+              {{ 'products.product.free_shipping_note' | t: amount: free_ship_amount }}
+            </div>
+          </div>
+
+          {%- if section.blocks.size > 0 -%}
+            <div class="product-accordions">
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'accordion' -%}
+                  <details class="product-accordion" {{ block.shopify_attributes }}>
+                    <summary class="font-accent product-accordion__summary">
+                      {{ block.settings.title }}
+                      {% render 'icon', name: 'chevron-down', width: 14, height: 14 %}
+                    </summary>
+                    <div class="product-accordion__content rte">{{ block.settings.content }}</div>
+                  </details>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endform -%}
+  </div>
+</div>
+
+<div data-product-recommendations-target data-product-id="{{ product.id }}" data-section-url="{{ routes.product_recommendations_url }}?section_id={{ 'product-recommendations' }}&product_id={{ product.id }}&limit=4&intent=related"></div>
+
+{% schema %}
+{
+  "name": "t:sections.main-product.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker_text",
+      "label": "t:sections.main-product.settings.kicker_text",
+      "default": "Numbered edition"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_size_guide",
+      "label": "t:sections.main-product.settings.enable_size_guide",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "size_guide_content",
+      "label": "t:sections.main-product.settings.size_guide_content",
+      "default": "<p>S — Chest 52cm, Length 68cm<br>M — Chest 56cm, Length 70cm<br>L — Chest 60cm, Length 72cm<br>XL — Chest 64cm, Length 74cm</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "accordion",
+      "name": "t:sections.main-product.blocks.accordion.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.main-product.blocks.accordion.settings.title",
+          "default": "Shipping"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "t:sections.main-product.blocks.accordion.settings.content"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

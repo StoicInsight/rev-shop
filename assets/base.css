@@ -1,0 +1,342 @@
+/* ---------------------------------------------------------------
+   Rêveur — base design tokens, reset & typography
+--------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: rgb(var(--color-page-bg));
+  color: rgb(var(--color-ink));
+  font-family: var(--font-body);
+  font-style: var(--font-body-style);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: rgb(var(--color-accent));
+  text-decoration: none;
+}
+
+a:hover {
+  color: rgb(var(--color-ink));
+}
+
+button {
+  font-family: inherit;
+}
+
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgb(var(--color-text-faint));
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-style: var(--font-heading-style);
+  font-weight: 400;
+}
+
+p {
+  margin: 0;
+}
+
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid rgb(var(--color-border));
+  margin: 0;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-to-content-link:focus {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 100;
+  width: auto;
+  height: auto;
+  padding: 12px 18px;
+  clip: auto;
+  clip-path: none;
+  background: rgb(var(--color-accent));
+  color: #fff;
+  border-radius: 8px;
+  font-family: var(--font-accent);
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+:focus-visible {
+  outline: 2px solid rgb(var(--color-accent));
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Layout ------------------------------------------------------ */
+
+.page-width {
+  width: 100%;
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 0 clamp(20px, 3.2vw, 44px);
+}
+
+.content-for-layout {
+  background: rgb(var(--color-body-bg));
+}
+
+.section + .section {
+  margin-top: var(--space-section);
+}
+
+/* Typography helpers -------------------------------------------------- */
+
+.font-heading {
+  font-family: var(--font-heading);
+  font-style: var(--font-heading-style);
+}
+
+.font-accent {
+  font-family: var(--font-accent);
+  font-style: var(--font-accent-style);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-accent);
+  font-size: 10.5px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgb(var(--color-accent));
+}
+
+.eyebrow::before {
+  content: '';
+  width: 34px;
+  height: 1px;
+  background: currentColor;
+  flex: none;
+}
+
+.italic-accent {
+  font-style: italic;
+  color: rgb(var(--color-accent));
+}
+
+/* Decorative dot-grid background, used behind hero/gallery panels ----- */
+
+.dot-field {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(var(--color-accent), .12) 1px, transparent 1px);
+  background-size: 9px 9px;
+  pointer-events: none;
+}
+
+/* Motion -------------------------------------------------------------- */
+
+@keyframes reveur-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-33.333%); }
+}
+
+@keyframes reveur-rise {
+  from { transform: translateY(14px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes reveur-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-rise {
+  animation: reveur-rise .22s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-rise {
+    animation: reveur-fade .01s linear;
+  }
+}
+
+/* Screen reader only live regions -------------------------------------- */
+
+.toast-root {
+  position: fixed;
+  left: 50%;
+  bottom: 26px;
+  transform: translateX(-50%);
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgb(var(--color-ink));
+  color: #fff;
+  padding: 14px 22px;
+  border-radius: 999px;
+  font-family: var(--font-accent);
+  font-size: 10.5px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  animation: reveur-rise .2s ease-out;
+  box-shadow: 0 18px 40px -20px rgba(14, 21, 51, .5);
+}
+
+.toast::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgb(var(--color-accent));
+  flex: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast { animation: reveur-fade .01s linear; }
+}
+
+/* 404 -------------------------------------------------------------- */
+
+.not-found {
+  padding: clamp(72px, 9vw, 140px) clamp(20px, 3.2vw, 44px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.not-found__title {
+  font-size: clamp(30px, 3.6vw, 48px);
+  line-height: 1.04;
+  font-weight: 400;
+}
+
+.not-found__body {
+  margin: 0;
+  max-width: 420px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgb(var(--color-text-soft));
+}
+
+/* Rich text content ---------------------------------------------------- */
+
+.rte {
+  font-size: 15px;
+  line-height: 1.75;
+  color: rgb(var(--color-text-soft));
+}
+
+.rte > * + * {
+  margin-top: 1.1em;
+}
+
+.rte h1, .rte h2, .rte h3, .rte h4 {
+  color: rgb(var(--color-ink));
+  line-height: 1.2;
+}
+
+.rte h2 { font-size: 1.6em; }
+.rte h3 { font-size: 1.3em; }
+
+.rte a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.rte ul, .rte ol {
+  padding-left: 1.4em;
+}
+
+.rte ul { list-style: disc; }
+.rte ol { list-style: decimal; }
+
+.rte img {
+  border-radius: 4px;
+}
+
+.rte blockquote {
+  margin: 0;
+  padding-left: 1.2em;
+  border-left: 2px solid rgb(var(--color-accent));
+  font-style: italic;
+  color: rgb(var(--color-text-muted));
+}
+
+.page-rte {
+  max-width: 720px;
+}
+
+.page-rte__title {
+  font-size: clamp(30px, 3.6vw, 48px);
+  line-height: 1.04;
+  font-weight: 400;
+  margin-bottom: 26px;
+}

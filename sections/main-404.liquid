@@ -1,0 +1,17 @@
+<div class="not-found">
+  <svg viewBox="0 0 32 32" width="46" height="46" aria-hidden="true">
+    <circle cx="16" cy="16" r="15" fill="rgb(var(--color-surface))"></circle>
+    <circle cx="16" cy="16" r="9" fill="rgb(var(--color-accent))"></circle>
+    <circle cx="20.5" cy="13" r="8" fill="rgb(var(--color-surface))"></circle>
+  </svg>
+  <h1 class="font-heading not-found__title">{{ 'general.404.title' | t }}</h1>
+  <p class="not-found__body">{{ 'general.404.subtext' | t }}</p>
+  <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary">{{ 'general.404.link' | t }}</a>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-404.name",
+  "settings": []
+}
+{% endschema %}

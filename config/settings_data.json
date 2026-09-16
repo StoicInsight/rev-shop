@@ -1,0 +1,50 @@
+{
+  "current": "Default",
+  "presets": {
+    "Default": {
+      "logo_wordmark": "RÊVEUR",
+      "logo_tagline": "The House of Dreamers",
+      "logo_width": 148,
+      "color_accent": "#1B3FAE",
+      "color_ink": "#0E1533",
+      "color_page_background": "#E4E9F5",
+      "color_body_background": "#FFFFFF",
+      "color_surface_tint": "#EEF2FF",
+      "color_surface_tint_soft": "#F5F8FF",
+      "color_text_muted": "#5A6485",
+      "color_text_soft": "#3B446B",
+      "color_text_faint": "#8A93B0",
+      "color_border": "#D3DAF0",
+      "color_border_strong": "#C3CCE8",
+      "font_heading": "bodoni-moda_n4",
+      "font_body": "archivo_n4",
+      "font_accent": "ibm-plex-mono_n4",
+      "page_width": 1320,
+      "spacing_sections": 0,
+      "button_radius": 40,
+      "cart_type": "drawer",
+      "cart_free_shipping_threshold": 75,
+      "predictive_search_enabled": true
+    }
+  },
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "shop": {
+          "type": "link_list",
+          "settings": { "title": "Shop", "menu": "footer" }
+        },
+        "house": {
+          "type": "link_list",
+          "settings": { "title": "House", "menu": "footer" }
+        },
+        "help": {
+          "type": "link_list",
+          "settings": { "title": "Help", "menu": "footer" }
+        }
+      },
+      "block_order": ["shop", "house", "help"]
+    }
+  }
+}

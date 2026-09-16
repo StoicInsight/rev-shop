@@ -1,0 +1,65 @@
+<div id="MainBlog" class="section-pad">
+  <div class="page-width">
+    <nav class="breadcrumb font-accent" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">{{ 'products.product.breadcrumb' | t }}</a>
+      <span>/</span>
+      <span aria-current="page">{{ blog.title }}</span>
+    </nav>
+
+    <div class="section-head">
+      <h1 class="font-heading section-head__title">{{ blog.title }}</h1>
+    </div>
+
+    {%- paginate blog.articles by section.settings.articles_per_page -%}
+      {%- if blog.articles.size > 0 -%}
+        <div class="blog-grid">
+          {%- for article in blog.articles -%}
+            <a href="{{ article.url }}" class="blog-card">
+              <div class="blog-card__media">
+                {%- if article.image -%}
+                  <img
+                    src="{{ article.image | image_url: width: 700 }}"
+                    srcset="{{ article.image | image_url: width: 400 }} 400w, {{ article.image | image_url: width: 700 }} 700w"
+                    sizes="(min-width: 900px) 320px, 90vw"
+                    alt="{{ article.image.alt | escape }}"
+                    loading="lazy"
+                    width="700" height="500"
+                  >
+                {%- else -%}
+                  {{ 'lifestyle-1' | placeholder_svg_tag: 'blog-card__placeholder' }}
+                {%- endif -%}
+              </div>
+              <div class="font-accent blog-card__date">{{ article.published_at | date: '%B %d, %Y' }}</div>
+              <div class="font-heading blog-card__title">{{ article.title }}</div>
+              {%- if article.excerpt != blank -%}
+                <p class="blog-card__excerpt">{{ article.excerpt | strip_html | truncate: 120 }}</p>
+              {%- endif -%}
+            </a>
+          {%- endfor -%}
+        </div>
+        {%- render 'pagination', paginate: paginate -%}
+      {%- else -%}
+        <div class="empty-state">
+          <div class="empty-state__title font-heading">{{ 'collections.general.no_matches' | t }}</div>
+        </div>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-blog.name",
+  "settings": [
+    {
+      "type": "range",
+      "id": "articles_per_page",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "label": "Articles per page",
+      "default": 12
+    }
+  ]
+}
+{% endschema %}

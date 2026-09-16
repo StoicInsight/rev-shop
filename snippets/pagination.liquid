@@ -1,0 +1,32 @@
+{%- comment -%} Renders pagination controls. Param: paginate {%- endcomment -%}
+{%- if paginate.pages > 1 -%}
+  <nav class="pagination font-accent" aria-label="Pagination">
+    {%- if paginate.previous -%}
+      <a href="{{ paginate.previous.url }}" class="pagination__link pagination__link--prev">
+        {% render 'icon', name: 'chevron-right', width: 13, height: 13 %}
+        <span class="visually-hidden">Previous</span>
+      </a>
+    {%- endif -%}
+
+    <div class="pagination__list">
+      {%- for part in paginate.parts -%}
+        {%- if part.is_link -%}
+          <a href="{{ part.url }}" class="pagination__link">{{ part.title }}</a>
+        {%- else -%}
+          {%- if part.title == paginate.current_page -%}
+            <span class="pagination__link pagination__link--current" aria-current="page">{{ part.title }}</span>
+          {%- else -%}
+            <span class="pagination__ellipsis">{{ part.title }}</span>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if paginate.next -%}
+      <a href="{{ paginate.next.url }}" class="pagination__link pagination__link--next">
+        <span class="visually-hidden">Next</span>
+        {% render 'icon', name: 'chevron-right', width: 13, height: 13 %}
+      </a>
+    {%- endif -%}
+  </nav>
+{%- endif -%}

@@ -1,0 +1,65 @@
+/* ---------------------------------------------------------------
+   Rêveur — cart page
+--------------------------------------------------------------- */
+
+.cart-page__title {
+  font-size: clamp(30px, 3.4vw, 46px);
+  line-height: 1.04;
+  font-weight: 400;
+  margin-bottom: 32px;
+}
+
+.cart-page__empty {
+  padding: 80px 24px;
+}
+
+.cart-page__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(28px, 3.4vw, 56px);
+  align-items: start;
+}
+
+@media (min-width: 800px) {
+  .cart-page__grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+
+.cart-page__lines {
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-line--page {
+  padding: 22px 0;
+}
+
+.cart-line--page .cart-line__media {
+  width: 96px;
+  height: 115px;
+  flex: 0 0 96px;
+}
+
+.cart-page__summary {
+  border: 1px solid rgb(var(--color-border));
+  background: rgb(var(--color-surface-soft));
+  padding: clamp(20px, 2.4vw, 30px);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.cart-page__summary-title {
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgb(var(--color-text-muted));
+}
+
+.cart-page__total-row {
+  color: rgb(var(--color-ink));
+  font-size: 14px;
+  padding-top: 8px;
+  border-top: 1px solid rgb(var(--color-border));
+}

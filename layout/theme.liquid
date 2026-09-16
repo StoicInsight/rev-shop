@@ -1,0 +1,142 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_body_background }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  {% if settings.favicon %}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 48, height: 48 }}">
+  {% endif %}
+
+  {% render 'meta-tags' %}
+
+  <title>
+    {{ page_title }}
+    {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+    {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+    {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+  </title>
+
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+  {{ 'component-header.css' | asset_url | stylesheet_tag }}
+  {{ 'component-footer.css' | asset_url | stylesheet_tag }}
+  {{ 'component-cart-drawer.css' | asset_url | stylesheet_tag }}
+  {{ 'component-product-card.css' | asset_url | stylesheet_tag }}
+  {{ 'component-buttons.css' | asset_url | stylesheet_tag }}
+  {{ 'component-hero.css' | asset_url | stylesheet_tag }}
+  {%- if template == 'collection' or template == 'search' -%}
+    {{ 'component-collection.css' | asset_url | stylesheet_tag }}
+  {%- endif -%}
+  {%- if template == 'product' -%}
+    {{ 'component-product.css' | asset_url | stylesheet_tag }}
+  {%- endif -%}
+  {%- if template == 'cart' -%}
+    {{ 'component-cart-page.css' | asset_url | stylesheet_tag }}
+  {%- endif -%}
+  {%- if template contains 'customers' -%}
+    {{ 'component-account.css' | asset_url | stylesheet_tag }}
+  {%- endif -%}
+  {%- if template == 'blog' or template == 'article' or template == 'list-collections' -%}
+    {{ 'component-blog.css' | asset_url | stylesheet_tag }}
+  {%- endif -%}
+
+  {{ settings.font_heading | font_face: font_display: 'swap' }}
+  {{ settings.font_body | font_face: font_display: 'swap' }}
+  {{ settings.font_accent | font_face: font_display: 'swap' }}
+
+  {% style %}
+    :root {
+      --color-accent: {{ settings.color_accent.red }}, {{ settings.color_accent.green }}, {{ settings.color_accent.blue }};
+      --color-ink: {{ settings.color_ink.red }}, {{ settings.color_ink.green }}, {{ settings.color_ink.blue }};
+      --color-page-bg: {{ settings.color_page_background.red }}, {{ settings.color_page_background.green }}, {{ settings.color_page_background.blue }};
+      --color-body-bg: {{ settings.color_body_background.red }}, {{ settings.color_body_background.green }}, {{ settings.color_body_background.blue }};
+      --color-surface: {{ settings.color_surface_tint.red }}, {{ settings.color_surface_tint.green }}, {{ settings.color_surface_tint.blue }};
+      --color-surface-soft: {{ settings.color_surface_tint_soft.red }}, {{ settings.color_surface_tint_soft.green }}, {{ settings.color_surface_tint_soft.blue }};
+      --color-text-muted: {{ settings.color_text_muted.red }}, {{ settings.color_text_muted.green }}, {{ settings.color_text_muted.blue }};
+      --color-text-soft: {{ settings.color_text_soft.red }}, {{ settings.color_text_soft.green }}, {{ settings.color_text_soft.blue }};
+      --color-text-faint: {{ settings.color_text_faint.red }}, {{ settings.color_text_faint.green }}, {{ settings.color_text_faint.blue }};
+      --color-border: {{ settings.color_border.red }}, {{ settings.color_border.green }}, {{ settings.color_border.blue }};
+      --color-border-strong: {{ settings.color_border_strong.red }}, {{ settings.color_border_strong.green }}, {{ settings.color_border_strong.blue }};
+
+      --font-heading: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
+      --font-heading-style: {{ settings.font_heading.style }};
+      --font-body: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
+      --font-body-style: {{ settings.font_body.style }};
+      --font-accent: {{ settings.font_accent.family }}, {{ settings.font_accent.fallback_families }};
+      --font-accent-style: {{ settings.font_accent.style }};
+
+      --page-width: {{ settings.page_width }}px;
+      --radius-button: {{ settings.button_radius }}px;
+      --space-section: {{ settings.spacing_sections }}px;
+    }
+  {% endstyle %}
+
+  {{ content_for_header }}
+</head>
+<body class="template-{{ request.page_type | handleize }}">
+
+  <a class="skip-to-content-link visually-hidden" href="#MainContent">
+    {{ 'accessibility.skip_to_content' | t }}
+  </a>
+
+  {% section 'header' %}
+
+  <main id="MainContent" class="content-for-layout" tabindex="-1">
+    {{ content_for_layout }}
+  </main>
+
+  {% section 'footer' %}
+
+  {% section 'cart-drawer' %}
+
+  <div id="toast-root" class="toast-root" aria-live="polite" aria-atomic="true"></div>
+
+  <script>
+    window.Reveur = window.Reveur || {};
+    window.Reveur.routes = {
+      cart_url: {{ routes.cart_url | json }},
+      cart_add_url: {{ routes.cart_add_url | json }},
+      cart_change_url: {{ routes.cart_change_url | json }},
+      cart_update_url: {{ routes.cart_update_url | json }},
+      predictive_search_url: {{ routes.predictive_search_url | json }},
+      search_url: {{ routes.search_url | json }}
+    };
+    window.Reveur.settings = {
+      freeShippingThreshold: {{ settings.cart_free_shipping_threshold | default: 0 | json }},
+      moneyFormat: {{ shop.money_format | json }},
+      cartType: {{ settings.cart_type | json }}
+    };
+    window.Reveur.strings = {
+      addedToCart: {{ 'cart.general.added' | t: title: '__TITLE__' | json }},
+      cartError: {{ 'cart.general.error' | t | json }},
+      selectSizeFirst: {{ 'products.product.select_size_first' | t | json }},
+      sizeSoldOut: {{ 'products.product.size_sold_out' | t: size: '__SIZE__' | json }},
+      productSoldOut: {{ 'products.product.product_sold_out' | t | json }},
+      stockLeft: {{ 'products.product.stock_left' | t: count: '__COUNT__', size: '__SIZE__' | json }},
+      selectASize: {{ 'products.product.select_a_size' | t | json }},
+      soldOut: {{ 'products.product.sold_out' | t | json }},
+      addToCartLabel: {{ 'products.product.add_to_cart' | t | json }},
+      addToCartWithPrice: {{ 'products.product.add_to_cart_with_price' | t: price: '__PRICE__' | json }},
+      searchNoResults: {{ 'general.search.no_results_html' | t: terms: '__TERMS__' | json }},
+      searchViewAll: {{ 'general.search.view_all' | t | json }}
+    };
+  </script>
+
+  <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
+  {% if settings.predictive_search_enabled %}
+    <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
+  {% endif %}
+  {% if template contains 'product' %}
+    <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+  {% endif %}
+
+  <script>document.documentElement.classList.remove('no-js');</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+{
+  "sections": {
+    "main-product": {
+      "type": "main-product",
+      "blocks": {
+        "shipping": {
+          "type": "accordion",
+          "settings": {
+            "title": "Shipping & returns",
+            "content": "<p>Free shipping on orders over $75. Standard delivery in 3–7 business days. 30-day returns on unworn items with tags attached.</p>"
+          }
+        },
+        "materials": {
+          "type": "accordion",
+          "settings": {
+            "title": "Fabric & care",
+            "content": "<p>Heavyweight brushed-back fleece, boxy pre-shrunk fit. Machine wash cold, inside out. Do not tumble dry high.</p>"
+          }
+        }
+      },
+      "block_order": ["shipping", "materials"],
+      "settings": {}
+    },
+    "product-recommendations": {
+      "type": "product-recommendations",
+      "settings": {}
+    }
+  },
+  "order": ["main-product", "product-recommendations"]
+}

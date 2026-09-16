@@ -1,0 +1,134 @@
+{%- liquid
+  assign per_page = section.settings.products_per_page
+  assign type_filter = nil
+  for filter in collection.filters
+    if filter.param_name == 'filter.p.product_type'
+      assign type_filter = filter
+    endif
+  endfor
+  assign wanted_sorts = 'manual,price-ascending,created-descending' | split: ','
+-%}
+
+<div id="MainCollection" class="section-pad">
+  <div class="page-width">
+
+    <nav class="breadcrumb font-accent" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">{{ 'products.product.breadcrumb' | t }}</a>
+      <span>/</span>
+      <span aria-current="page">{{ collection.title }}</span>
+    </nav>
+
+    <div class="section-head">
+      <h1 class="font-heading section-head__title">{{ collection.title }}</h1>
+      <div class="section-head__meta">{{ 'collections.general.items_with_count' | t: count: collection.products.size }}</div>
+    </div>
+
+    {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
+      <div class="collection-controls">
+        {%- if section.settings.enable_filtering and type_filter -%}
+          <div class="collection-controls__filters" role="group" aria-label="{{ 'collections.general.filter_button' | t }}">
+            <a href="{{ collection.url }}?sort_by={{ collection.sort_by }}" class="chip{% unless type_filter.active_values.size > 0 %} is-active{% endunless %}">
+              {{ 'collections.general.all_products' | t }}
+            </a>
+            {%- for value in type_filter.values -%}
+              {%- if value.count > 0 or value.active -%}
+                {%- assign chip_href = value.url_to_add -%}
+                {%- if value.active -%}{%- assign chip_href = value.url_to_remove -%}{%- endif -%}
+                <a href="{{ chip_href }}" class="chip{% if value.active %} is-active{% endif %}" aria-pressed="{{ value.active }}">
+                  {{ value.label }}
+                </a>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.enable_sorting -%}
+          <form method="get" action="{{ collection.url }}" class="collection-controls__sort" data-sort-form>
+            {%- for filter in collection.filters -%}
+              {%- for value in filter.values -%}
+                {%- if value.active -%}
+                  <input type="hidden" name="{{ filter.param_name }}" value="{{ value.value }}">
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endfor -%}
+            <span class="font-accent collection-controls__sort-label">{{ 'collections.general.sort_button' | t }}</span>
+            {%- for option in collection.sort_options -%}
+              {%- if wanted_sorts contains option.value -%}
+                {%- assign is_active_sort = false -%}
+                {%- if collection.sort_by == option.value -%}
+                  {%- assign is_active_sort = true -%}
+                {%- endif -%}
+                {%- if collection.sort_by == blank and option.value == collection.default_sort_by -%}
+                  {%- assign is_active_sort = true -%}
+                {%- endif -%}
+                <button
+                  type="submit"
+                  name="sort_by"
+                  value="{{ option.value }}"
+                  class="chip{% if is_active_sort %} is-active{% endif %}"
+                >
+                  {{ option.name }}
+                </button>
+              {%- endif -%}
+            {%- endfor -%}
+          </form>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- paginate collection.products by per_page -%}
+      {%- if collection.products.size > 0 -%}
+        <div class="product-grid" style="--columns-desktop: {{ section.settings.columns_desktop }};">
+          {%- for product in collection.products -%}
+            {% render 'product-card', product: product, index: forloop.index %}
+          {%- endfor -%}
+        </div>
+        {%- render 'pagination', paginate: paginate -%}
+      {%- else -%}
+        <div class="empty-state">
+          <div class="empty-state__title font-heading">{{ 'collections.general.no_matches' | t }}</div>
+          <p class="empty-state__body">{{ 'collections.general.no_matches_html' | t }}</p>
+          <a href="{{ collection.url }}" class="btn btn-outline">{{ 'collections.general.clear_filters' | t }}</a>
+        </div>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-collection.name",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "label": "t:sections.main-collection.settings.products_per_page",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "label": "t:sections.main-collection.settings.columns_desktop",
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "label": "t:sections.main-collection.settings.enable_filtering",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "label": "t:sections.main-collection.settings.enable_sorting",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

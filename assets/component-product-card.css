@@ -1,0 +1,134 @@
+/* ---------------------------------------------------------------
+   Rêveur — product card & price
+--------------------------------------------------------------- */
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(238px, 1fr));
+  border-left: 1px solid rgb(var(--color-border));
+  border-top: 1px solid rgb(var(--color-border));
+}
+
+.product-grid--no-top-border {
+  border-top: none;
+}
+
+@media (min-width: 900px) {
+  .product-grid {
+    grid-template-columns: repeat(var(--columns-desktop, 4), 1fr);
+  }
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid rgb(var(--color-border));
+  border-bottom: 1px solid rgb(var(--color-border));
+  padding: 22px 20px 24px;
+  transition: background-color .15s ease;
+}
+
+.product-card:hover {
+  background: rgb(var(--color-surface-soft));
+}
+
+.product-card__meta-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  letter-spacing: .16em;
+  color: rgb(var(--color-text-muted));
+  margin-bottom: 16px;
+}
+
+.product-card__badge {
+  color: rgb(var(--color-accent));
+}
+
+.product-card__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 5;
+  background: rgb(var(--color-surface-soft));
+  overflow: hidden;
+}
+
+.product-card__img {
+  position: absolute;
+  inset: 4%;
+  display: block;
+  width: 92%;
+  height: 92%;
+  object-fit: contain;
+  transition: opacity .25s ease;
+}
+
+.product-card__img--hover {
+  opacity: 0;
+}
+
+.product-card__media:hover .product-card__img--hover {
+  opacity: 1;
+}
+
+.product-card__placeholder {
+  position: absolute;
+  inset: 12%;
+  width: 76%;
+  height: 76%;
+  opacity: .35;
+}
+
+.product-card__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+  margin-top: 18px;
+}
+
+.product-card__title {
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: rgb(var(--color-ink));
+}
+
+.product-card__subtitle {
+  font-size: 10px;
+  letter-spacing: .14em;
+  color: rgb(var(--color-text-muted));
+  margin: 7px 0 18px;
+}
+
+.product-card__cta {
+  margin-top: auto;
+  padding: 13px;
+  font-size: 10.5px;
+}
+
+/* Price -------------------------------------------------------------- */
+
+.price {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.price__from {
+  text-transform: lowercase;
+  color: rgb(var(--color-text-muted));
+  font-size: 10px;
+}
+
+.price--sale .price__current {
+  color: rgb(var(--color-accent));
+}
+
+.price__compare {
+  color: rgb(var(--color-text-faint));
+  text-decoration: line-through;
+  font-size: .85em;
+}

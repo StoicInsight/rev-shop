@@ -1,0 +1,161 @@
+/* ---------------------------------------------------------------
+   Rêveur — customer account pages
+--------------------------------------------------------------- */
+
+.account-narrow {
+  max-width: 460px;
+}
+
+.account-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: clamp(24px, 2.6vw, 34px);
+  border: 1px solid rgb(var(--color-border));
+  margin-bottom: 24px;
+}
+
+.account-panel--muted {
+  background: rgb(var(--color-surface-soft));
+  border-style: dashed;
+}
+
+.account-panel__title {
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.account-panel__subtitle {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.account-panel__hint {
+  margin: 0;
+  font-size: 13.5px;
+  color: rgb(var(--color-text-muted));
+  line-height: 1.6;
+}
+
+.account-panel__toggle {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.account-recover {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 8px;
+}
+
+.account-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.account-field-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+}
+
+.account-label {
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgb(var(--color-text-muted));
+}
+
+.account-orders {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid rgb(var(--color-border));
+}
+
+.account-order-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 16px 4px;
+  border-bottom: 1px solid rgb(var(--color-border));
+  color: rgb(var(--color-ink));
+  font-size: 11px;
+}
+
+.account-order-row:hover {
+  background: rgb(var(--color-surface-soft));
+}
+
+.account-order-row__total {
+  text-align: right;
+}
+
+.account-orders__empty {
+  color: rgb(var(--color-text-muted));
+  font-size: 14px;
+}
+
+.account-order-line {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgb(var(--color-surface));
+}
+
+.account-order-line .cart-line__details {
+  flex: 1;
+}
+
+.account-order-summary {
+  margin-top: 24px;
+  max-width: 420px;
+}
+
+.account-order-summary__label {
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgb(var(--color-text-muted));
+  margin-bottom: 8px;
+}
+
+.account-addresses {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.account-address-card {
+  border: 1px solid rgb(var(--color-border));
+  padding: 20px;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: rgb(var(--color-text-soft));
+}
+
+.account-address-card__default {
+  color: rgb(var(--color-accent));
+  font-size: 9.5px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.account-address-card__actions {
+  margin-top: 12px;
+}
+
+@media (max-width: 700px) {
+  .account-order-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}

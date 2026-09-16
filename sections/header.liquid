@@ -1,0 +1,100 @@
+{%- liquid
+  assign main_menu = section.settings.menu
+-%}
+
+<header class="site-header{% if section.settings.sticky %} site-header--sticky{% endif %}" data-header>
+  <div class="page-width site-header__inner">
+
+    <a href="{{ routes.root_url }}" class="site-header__brand" aria-label="{{ shop.name }}">
+      {%- if settings.logo -%}
+        <img
+          src="{{ settings.logo | image_url: width: 400 }}"
+          alt="{{ shop.name }}"
+          width="{{ settings.logo_width }}"
+          height="{{ settings.logo_width | divided_by: settings.logo.aspect_ratio | default: settings.logo_width }}"
+          style="--logo-width: {{ settings.logo_width }}px;"
+          loading="eager"
+        >
+      {%- else -%}
+        <span class="site-header__wordmark">{{ settings.logo_wordmark | default: shop.name }}</span>
+      {%- endif -%}
+      {%- if settings.logo_tagline != blank -%}
+        <span class="site-header__divider" aria-hidden="true"></span>
+        <span class="site-header__tagline">{{ settings.logo_tagline }}</span>
+      {%- endif -%}
+    </a>
+
+    <div class="site-header__actions-mobile">
+      <button type="button" class="site-header__icon-btn" data-search-open aria-label="{{ 'accessibility.search' | t }}">
+        {% render 'icon', name: 'search', width: 19, height: 19 %}
+      </button>
+      <button type="button" class="site-header__icon-btn" data-menu-toggle aria-expanded="false" aria-controls="MobileNav" aria-label="{{ 'accessibility.open_menu' | t }}">
+        {% render 'icon', name: 'menu', width: 22, height: 22 %}
+      </button>
+    </div>
+
+    <nav class="site-header__nav" aria-label="Primary">
+      {%- if main_menu.links.size > 0 -%}
+        {%- for link in main_menu.links -%}
+          <a href="{{ link.url }}" class="site-header__tab{% if link.active %} site-header__tab--active{% endif %}">
+            {{ link.title }}
+          </a>
+        {%- endfor -%}
+      {%- endif -%}
+
+      <button type="button" class="site-header__tab site-header__icon-tab" data-search-open aria-label="{{ 'accessibility.search' | t }}">
+        {% render 'icon', name: 'search', width: 17, height: 17 %}
+      </button>
+
+      <a href="{{ routes.account_url }}" class="site-header__tab site-header__icon-tab">
+        {% render 'icon', name: 'account', width: 17, height: 17 %}
+        <span class="visually-hidden">{{ 'accessibility.account' | t }}</span>
+      </a>
+
+      <a href="{{ routes.cart_url }}" class="site-header__tab site-header__cart-tab" data-cart-drawer-open>
+        {{ 'cart.general.title' | t }}
+        {% render 'cart-icon-bubble' %}
+      </a>
+    </nav>
+  </div>
+
+  {% render 'predictive-search' %}
+</header>
+
+<div class="mobile-nav" id="MobileNav" data-mobile-nav hidden>
+  <div class="mobile-nav__overlay" data-menu-close></div>
+  <div class="mobile-nav__panel">
+    <div class="mobile-nav__head">
+      <span class="font-heading site-header__wordmark">{{ settings.logo_wordmark | default: shop.name }}</span>
+      <button type="button" class="site-header__icon-btn" data-menu-close aria-label="{{ 'accessibility.close_menu' | t }}">
+        {% render 'icon', name: 'close', width: 20, height: 20 %}
+      </button>
+    </div>
+    <nav class="mobile-nav__links" aria-label="Mobile">
+      {%- for link in main_menu.links -%}
+        <a href="{{ link.url }}" class="mobile-nav__link{% if link.active %} mobile-nav__link--active{% endif %}">{{ link.title }}</a>
+      {%- endfor -%}
+      <a href="{{ routes.account_url }}" class="mobile-nav__link">{{ 'customer.account_fallback' | t }}</a>
+    </nav>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.header.name",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky",
+      "label": "t:sections.header.settings.sticky",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

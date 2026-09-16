@@ -1,0 +1,28 @@
+{%- comment -%}
+  Accepts: qty (number), min, max, name (input name), line (cart line index, optional),
+  size_class ('' or 'stepper-small'), data_key (cart line key, for cart contexts)
+{%- endcomment -%}
+{%- liquid
+  assign qty = qty | default: 1
+  assign min = min | default: 0
+  assign name = name | default: 'quantity'
+-%}
+<div class="stepper {{ size_class }}" data-quantity-selector {% if data_key %}data-line-key="{{ data_key }}"{% endif %}>
+  <button type="button" data-quantity-decrease aria-label="{{ 'cart.general.decrease_quantity' | t: title: item_title | default: 'Decrease quantity' }}" {% if qty <= min %}disabled{% endif %}>
+    {% render 'icon', name: 'minus', width: 13, height: 13 %}
+  </button>
+  <input
+    class="stepper-value stepper-input"
+    type="number"
+    name="{{ name }}"
+    value="{{ qty }}"
+    min="{{ min }}"
+    {% if max %}max="{{ max }}"{% endif %}
+    inputmode="numeric"
+    data-quantity-input
+    aria-label="{{ 'products.product.quantity.label' | t }}"
+  >
+  <button type="button" data-quantity-increase aria-label="{{ 'cart.general.increase_quantity' | t: title: item_title | default: 'Increase quantity' }}" {% if max and qty >= max %}disabled{% endif %}>
+    {% render 'icon', name: 'plus', width: 13, height: 13 %}
+  </button>
+</div>

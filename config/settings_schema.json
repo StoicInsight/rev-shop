@@ -1,0 +1,271 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Rêveur",
+    "theme_version": "1.0.0",
+    "theme_author": "Rêveur",
+    "theme_documentation_url": "https://github.com/",
+    "theme_support_url": "https://github.com/"
+  },
+  {
+    "name": "t:settings.logo.name",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "t:settings.logo.logo_image"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "min": 80,
+        "max": 280,
+        "step": 4,
+        "unit": "px",
+        "label": "t:settings.logo.logo_width",
+        "default": 148
+      },
+      {
+        "type": "text",
+        "id": "logo_wordmark",
+        "label": "t:settings.logo.wordmark",
+        "default": "RÊVEUR"
+      },
+      {
+        "type": "text",
+        "id": "logo_tagline",
+        "label": "t:settings.logo.tagline",
+        "default": "The House of Dreamers"
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "t:settings.logo.favicon"
+      }
+    ]
+  },
+  {
+    "name": "t:settings.colors.name",
+    "settings": [
+      {
+        "type": "header",
+        "content": "t:settings.colors.brand"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "t:settings.colors.accent",
+        "default": "#1B3FAE"
+      },
+      {
+        "type": "color",
+        "id": "color_ink",
+        "label": "t:settings.colors.ink",
+        "default": "#0E1533"
+      },
+      {
+        "type": "header",
+        "content": "t:settings.colors.surfaces"
+      },
+      {
+        "type": "color",
+        "id": "color_page_background",
+        "label": "t:settings.colors.page_background",
+        "default": "#E4E9F5"
+      },
+      {
+        "type": "color",
+        "id": "color_body_background",
+        "label": "t:settings.colors.body_background",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_surface_tint",
+        "label": "t:settings.colors.surface_tint",
+        "default": "#EEF2FF"
+      },
+      {
+        "type": "color",
+        "id": "color_surface_tint_soft",
+        "label": "t:settings.colors.surface_tint_soft",
+        "default": "#F5F8FF"
+      },
+      {
+        "type": "header",
+        "content": "t:settings.colors.text_and_lines"
+      },
+      {
+        "type": "color",
+        "id": "color_text_muted",
+        "label": "t:settings.colors.text_muted",
+        "default": "#5A6485"
+      },
+      {
+        "type": "color",
+        "id": "color_text_soft",
+        "label": "t:settings.colors.text_soft",
+        "default": "#3B446B"
+      },
+      {
+        "type": "color",
+        "id": "color_text_faint",
+        "label": "t:settings.colors.text_faint",
+        "default": "#8A93B0"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "label": "t:settings.colors.border",
+        "default": "#D3DAF0"
+      },
+      {
+        "type": "color",
+        "id": "color_border_strong",
+        "label": "t:settings.colors.border_strong",
+        "default": "#C3CCE8"
+      }
+    ]
+  },
+  {
+    "name": "t:settings.typography.name",
+    "settings": [
+      {
+        "type": "header",
+        "content": "t:settings.typography.headings"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "t:settings.typography.font",
+        "default": "bodoni-moda_n4"
+      },
+      {
+        "type": "header",
+        "content": "t:settings.typography.body"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "t:settings.typography.font",
+        "default": "archivo_n4"
+      },
+      {
+        "type": "header",
+        "content": "t:settings.typography.accent"
+      },
+      {
+        "type": "paragraph",
+        "content": "t:settings.typography.accent_info"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_accent",
+        "label": "t:settings.typography.font",
+        "default": "ibm-plex-mono_n4"
+      }
+    ]
+  },
+  {
+    "name": "t:settings.layout.name",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page_width",
+        "min": 1000,
+        "max": 1600,
+        "step": 20,
+        "unit": "px",
+        "label": "t:settings.layout.page_width",
+        "default": 1320
+      },
+      {
+        "type": "range",
+        "id": "spacing_sections",
+        "min": 0,
+        "max": 120,
+        "step": 4,
+        "unit": "px",
+        "label": "t:settings.layout.spacing_sections",
+        "default": 0
+      }
+    ]
+  },
+  {
+    "name": "t:settings.buttons.name",
+    "settings": [
+      {
+        "type": "range",
+        "id": "button_radius",
+        "min": 0,
+        "max": 40,
+        "step": 2,
+        "unit": "px",
+        "label": "t:settings.buttons.radius",
+        "default": 40
+      }
+    ]
+  },
+  {
+    "name": "t:settings.cart.name",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "t:settings.cart.type",
+        "options": [
+          { "value": "drawer", "label": "t:settings.cart.type_drawer" },
+          { "value": "page", "label": "t:settings.cart.type_page" }
+        ],
+        "default": "drawer"
+      },
+      {
+        "type": "number",
+        "id": "cart_free_shipping_threshold",
+        "label": "t:settings.cart.free_shipping_threshold",
+        "info": "t:settings.cart.free_shipping_threshold_info",
+        "default": 75
+      }
+    ]
+  },
+  {
+    "name": "t:settings.social.name",
+    "settings": [
+      {
+        "type": "header",
+        "content": "t:settings.social.accounts"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter_link",
+        "label": "Twitter / X"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok_link",
+        "label": "TikTok"
+      }
+    ]
+  },
+  {
+    "name": "t:settings.search.name",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "predictive_search_enabled",
+        "label": "t:settings.search.predictive",
+        "default": true
+      }
+    ]
+  }
+]

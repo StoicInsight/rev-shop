@@ -1,0 +1,25 @@
+{%- comment -%}
+  Renders a price. Pass `product` and optionally a specific `variant`.
+  show_compare: whether to render the struck-through compare-at price (default true)
+{%- endcomment -%}
+{%- liquid
+  assign target = variant | default: product.selected_or_first_available_variant
+  assign price = target.price
+  assign compare_at = target.compare_at_price
+  assign show_compare = show_compare | default: true
+  assign on_sale = false
+  if compare_at and compare_at > price
+    assign on_sale = true
+  endif
+  assign show_from = false
+  if variant == blank and product.price_varies
+    assign show_from = true
+  endif
+-%}
+<span class="price font-accent{% if on_sale %} price--sale{% endif %}">
+  {%- if show_from -%}<span class="price__from">{{ 'collections.general.from_lowercase' | t }}</span>{%- endif -%}
+  <span class="price__current">{{ price | money }}</span>
+  {%- if on_sale and show_compare -%}
+    <span class="price__compare">{{ compare_at | money }}</span>
+  {%- endif -%}
+</span>

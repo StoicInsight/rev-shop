@@ -1,0 +1,73 @@
+<div id="MainSearch" class="section-pad">
+  <div class="page-width">
+    <div class="section-head">
+      <h1 class="font-heading section-head__title">{{ 'general.search.placeholder' | t }}</h1>
+    </div>
+
+    <form action="{{ routes.search_url }}" method="get" role="search" class="search-page__form">
+      <input type="hidden" name="type" value="product">
+      {% render 'icon', name: 'search', width: 18, height: 18 %}
+      <input
+        type="search"
+        name="q"
+        value="{{ search.terms | escape }}"
+        placeholder="{{ 'general.search.placeholder' | t }}"
+        class="search-page__input"
+      >
+      <button type="submit" class="btn btn-primary btn-small">{{ 'general.search.submit' | t }}</button>
+    </form>
+
+    {%- if search.performed -%}
+      {%- paginate search.results by section.settings.products_per_page -%}
+        {%- if search.results_count > 0 -%}
+          <div class="section-head__meta search-page__count font-accent">
+            {{ 'general.search.results_with_count' | t: count: search.results_count }}
+          </div>
+          <div class="product-grid" style="--columns-desktop: {{ section.settings.columns_desktop }};">
+            {%- for item in search.results -%}
+              {%- if item.object_type == 'product' -%}
+                {% render 'product-card', product: item, index: forloop.index %}
+              {%- else -%}
+                <a href="{{ item.url }}" class="search-page__other-result">
+                  <span class="font-accent search-page__other-type">{{ item.object_type }}</span>
+                  <span class="font-heading search-page__other-title">{{ item.title }}</span>
+                </a>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+          {%- render 'pagination', paginate: paginate -%}
+        {%- else -%}
+          <div class="empty-state">
+            <div class="empty-state__title font-heading">{{ 'general.search.no_results_html' | t: terms: search.terms }}</div>
+          </div>
+        {%- endif -%}
+      {%- endpaginate -%}
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-search.name",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "label": "Products per page",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "label": "Columns on desktop",
+      "default": 4
+    }
+  ]
+}
+{% endschema %}

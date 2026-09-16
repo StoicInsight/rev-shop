@@ -1,0 +1,124 @@
+<div class="hero">
+  <div class="dot-field" aria-hidden="true"></div>
+  <div class="hero__grid">
+    <div class="hero__text">
+      <div class="eyebrow">{{ section.settings.eyebrow }}</div>
+      <h1 class="hero__heading font-heading">
+        <span class="italic-accent">{{ section.settings.heading }}</span><br>
+        <span class="hero__heading-bold">{{ section.settings.heading_bold }}</span>
+      </h1>
+      {%- if section.settings.body != blank -%}
+        <p class="hero__body">{{ section.settings.body }}</p>
+      {%- endif -%}
+      <div class="hero__actions">
+        {%- if section.settings.button_label != blank -%}
+          <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="btn btn-primary">
+            {{ section.settings.button_label }}
+            {% render 'icon', name: 'chevron-right', width: 15, height: 15 %}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.micro_copy != blank -%}
+          <div class="hero__micro font-accent">{{ section.settings.micro_copy }}</div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="hero__media">
+      <svg class="hero__circles" viewBox="0 0 200 200" aria-hidden="true">
+        <circle cx="100" cy="100" r="70" fill="rgb(var(--color-border))"></circle>
+        <circle cx="128" cy="82" r="60" fill="rgb(var(--color-surface))"></circle>
+      </svg>
+      <div class="dot-field" aria-hidden="true"></div>
+      {%- if section.settings.image -%}
+        <img
+          src="{{ section.settings.image | image_url: width: 1200 }}"
+          srcset="{{ section.settings.image | image_url: width: 600 }} 600w, {{ section.settings.image | image_url: width: 900 }} 900w, {{ section.settings.image | image_url: width: 1200 }} 1200w"
+          sizes="(min-width: 900px) 50vw, 100vw"
+          alt="{{ section.settings.image.alt | default: section.settings.image_caption_title | escape }}"
+          class="hero__image"
+          loading="eager"
+          fetchpriority="high"
+          width="{{ section.settings.image.width }}"
+          height="{{ section.settings.image.height }}"
+        >
+      {%- endif -%}
+      {%- if section.settings.image_caption_title != blank -%}
+        <div class="hero__caption font-accent">
+          {{ section.settings.image_caption_title }}<br>
+          <span>{{ section.settings.image_caption_subtitle }}</span>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.hero.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.hero.settings.eyebrow",
+      "default": "Drop 01 — Live now"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.hero.settings.heading_italic",
+      "default": "Dream"
+    },
+    {
+      "type": "text",
+      "id": "heading_bold",
+      "label": "t:sections.hero.settings.heading",
+      "default": "Undefeated"
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "t:sections.hero.settings.body",
+      "default": "For the ones still working at the hour the crescent shows up. Heavyweight fleece, house-crested, numbered by hand, made to outlast the doubt."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:sections.hero.settings.button_label",
+      "default": "Shop the Collection"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:sections.hero.settings.button_link"
+    },
+    {
+      "type": "text",
+      "id": "micro_copy",
+      "label": "t:sections.hero.settings.micro_copy",
+      "default": "From $68 · 500 pieces per style"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.hero.settings.image"
+    },
+    {
+      "type": "text",
+      "id": "image_caption_title",
+      "label": "t:sections.hero.settings.image_caption_title",
+      "default": "Worn: Crest Crewneck"
+    },
+    {
+      "type": "text",
+      "id": "image_caption_subtitle",
+      "label": "t:sections.hero.settings.image_caption_subtitle",
+      "default": "Royal blue / silver print"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.hero.presets.name"
+    }
+  ]
+}
+{% endschema %}

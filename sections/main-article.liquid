@@ -1,0 +1,86 @@
+<div id="MainArticle" class="section-pad">
+  <div class="page-width page-rte">
+    <nav class="breadcrumb font-accent" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">{{ 'products.product.breadcrumb' | t }}</a>
+      <span>/</span>
+      <a href="{{ blog.url }}">{{ blog.title }}</a>
+      <span>/</span>
+      <span aria-current="page">{{ article.title }}</span>
+    </nav>
+
+    <div class="font-accent blog-card__date">{{ article.published_at | date: '%B %d, %Y' }}{% if article.author != blank %} · {{ article.author }}{% endif %}</div>
+    <h1 class="font-heading page-rte__title">{{ article.title }}</h1>
+
+    {%- if article.image -%}
+      <div class="article-hero">
+        <img
+          src="{{ article.image | image_url: width: 1400 }}"
+          srcset="{{ article.image | image_url: width: 700 }} 700w, {{ article.image | image_url: width: 1400 }} 1400w"
+          sizes="(min-width: 900px) 720px, 100vw"
+          alt="{{ article.image.alt | escape }}"
+          loading="eager"
+          width="{{ article.image.width }}" height="{{ article.image.height }}"
+        >
+      </div>
+    {%- endif -%}
+
+    <div class="rte">{{ article.content }}</div>
+
+    {%- if article.tags.size > 0 -%}
+      <div class="article-tags">
+        {%- for tag in article.tags -%}
+          <span class="chip">{{ tag }}</span>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <div class="article-nav">
+      {%- if blog.previous_article -%}
+        <a href="{{ blog.previous_article }}" class="underline-link">← Previous post</a>
+      {%- endif -%}
+      {%- if blog.next_article -%}
+        <a href="{{ blog.next_article }}" class="underline-link">Next post →</a>
+      {%- endif -%}
+    </div>
+
+    {%- if blog.comments_enabled? -%}
+      <div class="article-comments">
+        <h2 class="font-heading">{{ article.comments_count }} comments</h2>
+        {%- for comment in article.comments -%}
+          <div class="article-comment">
+            <div class="font-accent article-comment__author">{{ comment.author }} — {{ comment.created_at | date: '%B %d, %Y' }}</div>
+            <div class="rte">{{ comment.content }}</div>
+          </div>
+        {%- endfor -%}
+
+        {% form 'new_comment', article %}
+          {%- if form.posted_successfully? -%}
+            <div class="form-success">
+              {%- if blog.moderated? -%}Your comment was submitted and is awaiting approval.{%- else -%}Your comment was posted.{%- endif -%}
+            </div>
+          {%- endif -%}
+          {%- if form.errors -%}
+            <div class="form-error">{{ form.errors.messages.first }}</div>
+          {%- endif -%}
+          <div class="account-field">
+            <label class="font-accent account-label" for="CommentAuthor">Name</label>
+            <input class="field" type="text" name="comment[author]" id="CommentAuthor" value="{{ form.author }}" required>
+          </div>
+          <div class="account-field">
+            <label class="font-accent account-label" for="CommentEmail">Email</label>
+            <input class="field" type="email" name="comment[email]" id="CommentEmail" value="{{ form.email }}" required>
+          </div>
+          <div class="account-field">
+            <label class="font-accent account-label" for="CommentBody">Comment</label>
+            <textarea class="field" name="comment[body]" id="CommentBody" rows="5" required>{{ form.body }}</textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Post comment</button>
+        {% endform %}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{ "name": "t:sections.main-article.name", "settings": [] }
+{% endschema %}

@@ -1,0 +1,96 @@
+{%- liquid
+  assign threshold_cents = settings.cart_free_shipping_threshold | times: 100
+  assign remaining_cents = threshold_cents | minus: cart.total_price
+-%}
+<div id="MainCart" class="section-pad">
+  <div class="page-width">
+    <h1 class="font-heading cart-page__title">{{ 'cart.general.title' | t }}</h1>
+
+    {%- if cart.item_count == 0 -%}
+      <div class="empty-state cart-page__empty">
+        <svg viewBox="0 0 32 32" width="46" height="46" aria-hidden="true">
+          <circle cx="16" cy="16" r="15" fill="rgb(var(--color-surface))"></circle>
+          <circle cx="16" cy="16" r="9" fill="rgb(var(--color-accent))"></circle>
+          <circle cx="20.5" cy="13" r="8" fill="rgb(var(--color-surface))"></circle>
+        </svg>
+        <div class="empty-state__title font-heading">{{ 'cart.general.empty' | t }}</div>
+        <p class="empty-state__body">{{ 'cart.general.empty_body' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary">{{ 'cart.general.shop_the_drop' | t }}</a>
+      </div>
+    {%- else -%}
+      <div class="cart-page__grid">
+        <ul class="cart-page__lines" role="list" data-cart-lines>
+          {%- for item in cart.items -%}
+            <li class="cart-line cart-line--page" data-cart-line data-line-key="{{ item.key }}">
+              <a href="{{ item.url }}" class="cart-line__media">
+                {%- if item.image -%}
+                  <img src="{{ item.image | image_url: width: 240 }}" alt="{{ item.image.alt | default: item.title | escape }}" width="96" height="115" loading="lazy">
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'cart-line__placeholder' }}
+                {%- endif -%}
+              </a>
+              <div class="cart-line__details">
+                <div class="cart-line__top">
+                  <a href="{{ item.url }}" class="cart-line__title font-heading">{{ item.product.title }}</a>
+                  <div class="cart-line__price font-accent">
+                    {%- if item.original_line_price != item.final_line_price -%}
+                      <s class="cart-line__price-compare">{{ item.original_line_price | money }}</s>
+                    {%- endif -%}
+                    {{ item.final_line_price | money }}
+                  </div>
+                </div>
+                {%- if item.variant.title != 'Default Title' -%}
+                  <div class="cart-line__variant font-accent">{{ item.variant.title | replace: ' / ', ' · ' }}</div>
+                {%- endif -%}
+                <div class="cart-line__controls">
+                  {% render 'quantity-selector', qty: item.quantity, size_class: 'stepper-small', data_key: item.key, item_title: item.product.title %}
+                  <button type="button" class="cart-line__remove font-accent" data-cart-line-remove data-line-key="{{ item.key }}">
+                    {{ 'cart.general.remove' | t }}
+                  </button>
+                </div>
+              </div>
+            </li>
+          {%- endfor -%}
+        </ul>
+
+        <div class="cart-page__summary">
+          <div class="font-accent cart-page__summary-title">{{ 'cart.label.title' | t }} summary</div>
+          <div class="cart-drawer__totals font-accent">
+            <div class="cart-drawer__totals-row">
+              <span>{{ 'cart.general.subtotal' | t }}</span>
+              <span data-cart-subtotal>{{ cart.total_price | money }}</span>
+            </div>
+            <div class="cart-drawer__totals-row">
+              <span>{{ 'cart.general.shipping' | t }}</span>
+              <span>{{ 'cart.general.shipping_free' | t }}</span>
+            </div>
+            <div class="cart-drawer__totals-row cart-page__total-row">
+              <span>{{ 'cart.general.total' | t }}</span>
+              <span data-cart-total>{{ cart.total_price | money }}</span>
+            </div>
+          </div>
+
+          {%- if threshold_cents > 0 -%}
+            <div class="cart-drawer__nudge font-accent" {% if remaining_cents <= 0 %}data-unlocked{% endif %}>
+              {%- if remaining_cents > 0 -%}
+                {{ 'cart.general.free_shipping_away_html' | t: amount: remaining_cents | money }}
+              {%- else -%}
+                {{ 'cart.general.free_shipping_unlocked' | t }}
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+          <a href="/checkout" class="btn btn-primary btn-block">{{ 'cart.general.checkout' | t }}</a>
+          <a href="{{ routes.all_products_collection_url }}" class="underline-link cart-drawer__continue">{{ 'general.continue_shopping' | t }}</a>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-cart.name",
+  "settings": []
+}
+{% endschema %}

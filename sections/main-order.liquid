@@ -1,0 +1,66 @@
+<div class="section-pad account-section">
+  <div class="page-width">
+    <div class="section-head">
+      <h1 class="font-heading section-head__title">{{ 'customer.order.title' | t: name: order.name }}</h1>
+      <a href="{{ routes.account_url }}" class="underline-link">{{ 'customer.account.return' | t }}</a>
+    </div>
+
+    {%- assign order_date = order.created_at | date: '%B %d, %Y' -%}
+    <p class="account-panel__hint">{{ 'customer.order.date_html' | t: date: order_date }}</p>
+
+    <div class="account-orders">
+      {%- for line_item in order.line_items -%}
+        <div class="account-order-line">
+          <a href="{{ line_item.product.url | default: '#' }}" class="cart-line__media">
+            {%- if line_item.image -%}
+              <img src="{{ line_item.image | image_url: width: 160 }}" alt="{{ line_item.image.alt | escape }}" width="72" height="86" loading="lazy">
+            {%- endif -%}
+          </a>
+          <div class="cart-line__details">
+            <div class="cart-line__title font-heading">{{ line_item.title }}</div>
+            {%- if line_item.variant.title != 'Default Title' -%}
+              <div class="cart-line__variant font-accent">{{ line_item.variant.title }}</div>
+            {%- endif -%}
+            <div class="font-accent">{{ 'customer.order.quantity' | t }}: {{ line_item.quantity }}</div>
+          </div>
+          <div class="font-accent">{{ line_item.final_line_price | money }}</div>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="cart-page__summary account-order-summary">
+      <div class="cart-drawer__totals font-accent">
+        <div class="cart-drawer__totals-row"><span>{{ 'customer.order.subtotal' | t }}</span><span>{{ order.line_items_subtotal_price | money }}</span></div>
+        {%- for discount in order.cart_level_discount_applications -%}
+          <div class="cart-drawer__totals-row"><span>{{ 'customer.order.discount' | t }} ({{ discount.title }})</span><span>-{{ discount.total_allocated_amount | money }}</span></div>
+        {%- endfor -%}
+        {%- for shipping_method in order.shipping_methods -%}
+          <div class="cart-drawer__totals-row"><span>{{ 'customer.order.shipping' | t }}</span><span>{{ shipping_method.price | money }}</span></div>
+        {%- endfor -%}
+        {%- for tax_line in order.tax_lines -%}
+          <div class="cart-drawer__totals-row"><span>{{ 'customer.order.tax' | t }} ({{ tax_line.title }} {{ tax_line.rate | times: 100 }}%)</span><span>{{ tax_line.price | money }}</span></div>
+        {%- endfor -%}
+        <div class="cart-drawer__totals-row cart-page__total-row"><span>{{ 'customer.order.total' | t }}</span><span>{{ order.total_price | money }}</span></div>
+      </div>
+    </div>
+
+    <div class="account-addresses">
+      <div class="account-address-card">
+        <div class="font-accent account-order-summary__label">{{ 'customer.order.shipping_address' | t }}</div>
+        {%- if order.shipping_address -%}
+          <p>{{ order.shipping_address | format_address }}</p>
+        {%- endif -%}
+      </div>
+      <div class="account-address-card">
+        <div class="font-accent account-order-summary__label">{{ 'customer.order.billing_address' | t }}</div>
+        {%- if order.billing_address -%}
+          <p>{{ order.billing_address | format_address }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Order", "settings": [] }
+{% endschema %}

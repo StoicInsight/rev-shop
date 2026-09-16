@@ -1,0 +1,35 @@
+<div id="MainListCollections" class="section-pad">
+  <div class="page-width">
+    <div class="section-head">
+      <h1 class="font-heading section-head__title">{{ 'collections.general.all_products' | t }}</h1>
+    </div>
+
+    <div class="collection-grid">
+      {%- for coll in collections -%}
+        <a href="{{ coll.url }}" class="collection-card">
+          <div class="collection-card__media">
+            <span class="dot-field" aria-hidden="true"></span>
+            {%- if coll.featured_image -%}
+              <img
+                src="{{ coll.featured_image | image_url: width: 700 }}"
+                srcset="{{ coll.featured_image | image_url: width: 400 }} 400w, {{ coll.featured_image | image_url: width: 700 }} 700w"
+                sizes="(min-width: 900px) 320px, 90vw"
+                alt="{{ coll.featured_image.alt | default: coll.title | escape }}"
+                loading="lazy"
+                width="700" height="500"
+              >
+            {%- else -%}
+              {{ 'collection-1' | placeholder_svg_tag: 'collection-card__placeholder' }}
+            {%- endif -%}
+          </div>
+          <div class="font-heading collection-card__title">{{ coll.title }}</div>
+          <div class="font-accent collection-card__count">{{ 'collections.general.items_with_count' | t: count: coll.products_count }}</div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{ "name": "t:sections.main-list-collections.name", "settings": [] }
+{% endschema %}

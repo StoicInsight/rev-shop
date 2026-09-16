@@ -1,0 +1,88 @@
+{%- liquid
+  assign coll = section.settings.collection
+  assign limit = section.settings.products_to_show
+-%}
+<div class="section-pad">
+  <div class="page-width">
+    <div class="section-head">
+      <h2 class="font-heading section-head__title">
+        {{ section.settings.heading }} <span class="italic-accent">{{ section.settings.heading_italic }}</span>
+      </h2>
+      <div class="section-head__meta font-accent">
+        {%- if coll -%}
+          <span>{{ 'general.showing_of_count' | t: count: limit, total: coll.products_count }}</span>
+        {%- endif -%}
+        {%- if section.settings.show_view_all and coll -%}
+          <a href="{{ coll.url }}" class="underline-link">{{ 'general.view_all' | t }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if coll and coll.products.size > 0 -%}
+      <div class="product-grid" style="--columns-desktop: {{ section.settings.columns_desktop }};">
+        {%- for product in coll.products limit: limit -%}
+          {% render 'product-card', product: product, index: forloop.index %}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="empty-state">
+        <div class="empty-state__title font-heading">{{ 'collections.general.no_matches' | t }}</div>
+        <p class="empty-state__body">{{ 'collections.general.no_matches_html' | t }}</p>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.featured-collection.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.featured-collection.settings.heading",
+      "default": "The"
+    },
+    {
+      "type": "text",
+      "id": "heading_italic",
+      "label": "t:sections.featured-collection.settings.heading_italic",
+      "default": "New Drop"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "t:sections.featured-collection.settings.collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "label": "t:sections.featured-collection.settings.products_to_show",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "label": "t:sections.featured-collection.settings.columns_desktop",
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "t:sections.featured-collection.settings.show_view_all",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.featured-collection.presets.name"
+    }
+  ]
+}
+{% endschema %}

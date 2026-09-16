@@ -1,0 +1,64 @@
+{%- liquid
+  assign show_recover = false
+-%}
+<div class="section-pad account-section">
+  <div class="page-width account-narrow">
+
+    {%- form 'recover_customer_password' -%}
+      {%- if form.posted_successfully? or form.errors -%}{%- assign show_recover = true -%}{%- endif -%}
+
+      <div class="account-recover" data-recover-panel {% unless show_recover %}hidden{% endunless %}>
+        {%- if form.posted_successfully? -%}
+          <div class="form-success">{{ 'customer.recover_password.success' | t }}</div>
+        {%- else -%}
+          {%- if form.errors -%}
+            <div class="form-error">{{ form.errors.messages.first }}</div>
+          {%- endif -%}
+          <p class="account-panel__hint">{{ 'customer.recover_password.subtext' | t }}</p>
+          <div class="account-field">
+            <label class="font-accent account-label" for="RecoverEmail">{{ 'customer.login_page.email' | t }}</label>
+            <input class="field" type="email" name="email" id="RecoverEmail" autocomplete="email">
+          </div>
+          <button type="submit" class="btn btn-outline btn-block">{{ 'customer.recover_password.submit' | t }}</button>
+        {%- endif -%}
+        <button type="button" class="underline-link account-panel__toggle" data-recover-toggle>
+          {{ 'customer.login_page.cancel' | t }}
+        </button>
+      </div>
+    {%- endform -%}
+
+    <div class="account-panel" data-login-form-panel {% if show_recover %}hidden{% endif %}>
+      <h1 class="font-heading account-panel__title">{{ 'customer.login_page.title' | t }}</h1>
+      {% form 'customer_login', novalidate: 'novalidate' %}
+        {%- if form.errors -%}
+          <div class="form-error">{{ form.errors.messages.first }}</div>
+        {%- endif -%}
+
+        <div class="account-field">
+          <label class="font-accent account-label" for="CustomerEmail">{{ 'customer.login_page.email' | t }}</label>
+          <input class="field" type="email" name="customer[email]" id="CustomerEmail" autocomplete="email" autocorrect="off" autocapitalize="off" required>
+        </div>
+
+        <div class="account-field">
+          <label class="font-accent account-label" for="CustomerPassword">{{ 'customer.login_page.password' | t }}</label>
+          <input class="field" type="password" name="customer[password]" id="CustomerPassword" autocomplete="current-password" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">{{ 'customer.login_page.sign_in' | t }}</button>
+
+        <button type="button" class="underline-link account-panel__toggle" data-recover-toggle>
+          {{ 'customer.login_page.forgot_password' | t }}
+        </button>
+      {% endform %}
+    </div>
+
+    <div class="account-panel account-panel--muted">
+      <h2 class="font-heading account-panel__subtitle">{{ 'customer.register.title' | t }}</h2>
+      <a href="{{ routes.account_register_url }}" class="btn btn-outline btn-block">{{ 'customer.create_account' | t }}</a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Login", "settings": [] }
+{% endschema %}

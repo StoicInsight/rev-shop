@@ -1,0 +1,74 @@
+{%- comment -%}
+  Generic option picker: renders swatches for Color/Colour options and pill
+  buttons for everything else (Size, Material, ...). Selection state and
+  availability are computed client-side by product-form.js from the JSON
+  data islands below.
+{%- endcomment -%}
+<div class="variant-picker" data-variant-picker>
+  {%- for option in product.options_with_values -%}
+    {%- assign option_lower = option.name | downcase -%}
+    {%- assign is_color = false -%}
+    {%- if option_lower == 'color' or option_lower == 'colour' -%}{%- assign is_color = true -%}{%- endif -%}
+    {%- assign is_size = false -%}
+    {%- if option_lower == 'size' -%}{%- assign is_size = true -%}{%- endif -%}
+
+    <div class="variant-picker__group" data-option-group data-option-position="{{ option.position }}" data-option-name="{{ option.name | escape }}">
+      <div class="variant-picker__group-head font-accent">
+        <span>
+          {%- if is_color -%}
+            {{ 'products.product.colour' | t: label: option.selected_value }}
+          {%- else -%}
+            {{ option.name }}
+            {%- if is_size -%}
+              <span data-selected-value-suffix hidden> — <span data-selected-value-text></span></span>
+            {%- endif -%}
+          {%- endif -%}
+        </span>
+        {%- if is_size and section.settings.enable_size_guide -%}
+          <button type="button" class="underline-link" data-size-guide-toggle aria-expanded="false" aria-controls="SizeGuide">
+            {{ 'products.product.size_guide' | t }}
+          </button>
+        {%- endif -%}
+      </div>
+
+      <div class="variant-picker__values">
+        {%- for value in option.values -%}
+          {%- assign is_selected = false -%}
+          {%- if option.selected_value == value and is_size == false -%}
+            {%- assign is_selected = true -%}
+          {%- endif -%}
+          <button
+            type="button"
+            class="variant-picker__value{% if is_color %} variant-picker__value--swatch{% endif %}{% if is_size %} variant-picker__value--pill{% endif %}{% if is_selected %} is-selected{% endif %}"
+            data-option-value
+            data-option-position="{{ option.position }}"
+            data-value="{{ value | escape }}"
+            aria-pressed="{{ is_selected }}"
+            title="{{ value | escape }}"
+          >
+            {%- if is_color -%}
+              {% render 'swatch', value: value %}
+            {%- else -%}
+              {{ value }}
+            {%- endif -%}
+          </button>
+        {%- endfor -%}
+      </div>
+
+      {%- if is_size -%}
+        <div class="form-error" data-size-error hidden>{{ 'products.product.select_size_first' | t }}</div>
+      {%- endif -%}
+    </div>
+  {%- endfor -%}
+
+  {%- if section.settings.enable_size_guide and section.settings.size_guide_content != blank -%}
+    <details class="size-guide" id="SizeGuide" data-size-guide>
+      <summary class="visually-hidden">{{ 'products.product.size_guide' | t }}</summary>
+      <div class="size-guide__content font-accent rte">{{ section.settings.size_guide_content }}</div>
+    </details>
+  {%- endif -%}
+</div>
+
+<script type="application/json" data-product-variants>
+  {{ product.variants | json }}
+</script>

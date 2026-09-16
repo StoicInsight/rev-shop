@@ -1,0 +1,39 @@
+{%- comment -%}
+  Renders a small colour swatch for an option value string, e.g. "Royal Blue".
+  Falls back to an initial-letter chip when the name isn't recognised —
+  merchants can extend the mapping below to match their own palette.
+{%- endcomment -%}
+{%- liquid
+  assign key = value | handleize
+  case key
+    when 'royal-blue', 'royal', 'blue', 'cobalt'
+      assign hex = '#1B3FAE'
+    when 'mist', 'periwinkle'
+      assign hex = '#DDE4F8'
+    when 'white', 'ecru', 'ivory', 'cream', 'off-white'
+      assign hex = '#FFFFFF'
+    when 'ice', 'light-blue'
+      assign hex = '#EEF2FF'
+    when 'black', 'jet-black'
+      assign hex = '#0E1533'
+    when 'navy', 'midnight'
+      assign hex = '#1B2A4A'
+    when 'grey', 'gray', 'heather-grey', 'heather-gray'
+      assign hex = '#9AA2BD'
+    when 'red', 'crimson'
+      assign hex = '#C23B3B'
+    when 'green', 'olive', 'forest'
+      assign hex = '#4B6B4F'
+    when 'silver'
+      assign hex = '#C3CCE8'
+    when 'gold', 'tan', 'sand', 'beige'
+      assign hex = '#C7A468'
+    when 'pink', 'blush'
+      assign hex = '#E3A9C0'
+    else
+      assign hex = ''
+  endcase
+-%}
+<span class="swatch" style="{% if hex != '' %}background-color: {{ hex }};{% else %}background-color: rgb(var(--color-surface));{% endif %}">
+  {%- if hex == '' -%}<span class="swatch__fallback">{{ value | slice: 0, 1 }}</span>{%- endif -%}
+</span>

@@ -1,0 +1,18 @@
+<div class="section-pad">
+  <div class="page-width page-rte">
+    <nav class="breadcrumb font-accent" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">{{ 'products.product.breadcrumb' | t }}</a>
+      <span>/</span>
+      <span aria-current="page">{{ page.title }}</span>
+    </nav>
+    <h1 class="font-heading page-rte__title">{{ page.title }}</h1>
+    <div class="rte page-rte__content">{{ page.content }}</div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-page.name",
+  "settings": []
+}
+{% endschema %}

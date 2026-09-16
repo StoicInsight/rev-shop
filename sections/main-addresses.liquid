@@ -1,0 +1,77 @@
+<div class="section-pad account-section">
+  <div class="page-width">
+    <div class="section-head">
+      <h1 class="font-heading section-head__title">{{ 'customer.addresses.title' | t }}</h1>
+      <a href="{{ routes.account_url }}" class="underline-link">{{ 'customer.account.return' | t }}</a>
+    </div>
+
+    <button type="button" class="btn btn-outline" data-address-new-toggle>{{ 'customer.addresses.add_new' | t }}</button>
+
+    <div class="account-panel" data-address-new-form hidden>
+      {% form 'customer_address', customer.new_address %}
+        <div class="account-field-row">
+          <div class="account-field">
+            <label class="font-accent account-label" for="AddressFirstNameNew">{{ 'customer.addresses.first_name' | t }}</label>
+            <input class="field" type="text" name="address[first_name]" id="AddressFirstNameNew" value="{{ form.first_name }}">
+          </div>
+          <div class="account-field">
+            <label class="font-accent account-label" for="AddressLastNameNew">{{ 'customer.addresses.last_name' | t }}</label>
+            <input class="field" type="text" name="address[last_name]" id="AddressLastNameNew" value="{{ form.last_name }}">
+          </div>
+        </div>
+        <div class="account-field">
+          <label class="font-accent account-label" for="AddressAddress1New">{{ 'customer.addresses.address1' | t }}</label>
+          <input class="field" type="text" name="address[address1]" id="AddressAddress1New" value="{{ form.address1 }}">
+        </div>
+        <div class="account-field">
+          <label class="font-accent account-label" for="AddressAddress2New">{{ 'customer.addresses.address2' | t }}</label>
+          <input class="field" type="text" name="address[address2]" id="AddressAddress2New" value="{{ form.address2 }}">
+        </div>
+        <div class="account-field-row">
+          <div class="account-field">
+            <label class="font-accent account-label" for="AddressCityNew">{{ 'customer.addresses.city' | t }}</label>
+            <input class="field" type="text" name="address[city]" id="AddressCityNew" value="{{ form.city }}">
+          </div>
+          <div class="account-field">
+            <label class="font-accent account-label" for="AddressZipNew">{{ 'customer.addresses.zip' | t }}</label>
+            <input class="field" type="text" name="address[zip]" id="AddressZipNew" value="{{ form.zip }}">
+          </div>
+        </div>
+        <div class="account-field">
+          <label class="font-accent account-label" for="AddressCountryNew">{{ 'customer.addresses.country' | t }}</label>
+          {{ form.country_select_tag }}
+        </div>
+        <div class="account-field">
+          <label class="font-accent account-label" for="AddressPhoneNew">{{ 'customer.addresses.phone' | t }}</label>
+          <input class="field" type="tel" name="address[phone]" id="AddressPhoneNew" value="{{ form.phone }}">
+        </div>
+        <button type="submit" class="btn btn-primary">{{ 'customer.addresses.add' | t }}</button>
+      {% endform %}
+    </div>
+
+    {%- if customer.addresses.size > 0 -%}
+      <div class="account-addresses">
+        {%- for address in customer.addresses -%}
+          <div class="account-address-card">
+            {%- if address == customer.default_address -%}
+              <div class="font-accent account-address-card__default">{{ 'customer.addresses.default' | t }}</div>
+            {%- endif -%}
+            <p>{{ address | format_address }}</p>
+            <div class="account-address-card__actions">
+              <form method="post" action="{{ address.url }}" data-address-delete-form>
+                <input type="hidden" name="_method" value="delete">
+                <button type="submit" class="underline-link" data-confirm="{{ 'customer.addresses.delete_confirm' | t }}">
+                  {{ 'customer.addresses.delete' | t }}
+                </button>
+              </form>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Addresses", "settings": [] }
+{% endschema %}

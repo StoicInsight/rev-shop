@@ -1,0 +1,138 @@
+/* ---------------------------------------------------------------
+   Rêveur — footer
+--------------------------------------------------------------- */
+
+.site-footer {
+  background: rgb(var(--color-surface));
+  color: rgb(var(--color-ink));
+  border-top: 1px solid rgb(var(--color-border));
+  padding: clamp(48px, 5vw, 76px) 0 28px;
+}
+
+.site-footer__top {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(32px, 4vw, 64px);
+  align-items: start;
+  padding-bottom: 44px;
+  border-bottom: 1px solid rgb(var(--color-border-strong));
+}
+
+@media (min-width: 700px) {
+  .site-footer__top {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+.site-footer__newsletter {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.site-footer__newsletter-heading {
+  font-size: clamp(28px, 3.4vw, 44px);
+  line-height: 1.04;
+  font-weight: 400;
+}
+
+.site-footer__newsletter-body {
+  margin: 0 0 14px;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: rgb(var(--color-text-soft));
+  max-width: 400px;
+}
+
+.site-footer__newsletter-field {
+  display: flex;
+  align-items: center;
+  max-width: 440px;
+  border-bottom: 1px solid rgb(var(--color-accent));
+}
+
+.site-footer__newsletter-input {
+  flex: 1;
+  min-width: 0;
+  padding: 14px 2px;
+  border: none;
+  background: transparent;
+  color: rgb(var(--color-ink));
+  font-family: var(--font-accent);
+  font-size: 12.5px;
+  outline: none;
+}
+
+.site-footer__menus {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
+  gap: 28px;
+}
+
+.site-footer__menu {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.site-footer__menu-title {
+  font-size: 9.5px;
+  letter-spacing: .2em;
+  color: rgb(var(--color-text-muted));
+}
+
+.site-footer__menu-link {
+  font-size: 13.5px;
+  color: rgb(var(--color-ink));
+}
+
+.site-footer__menu-link:hover {
+  color: rgb(var(--color-accent));
+}
+
+.site-footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding-top: 22px;
+}
+
+.site-footer__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.site-footer__brand-name {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: .1em;
+}
+
+.site-footer__copyright {
+  font-size: 10px;
+  letter-spacing: .14em;
+  color: rgb(var(--color-text-muted));
+}
+
+.site-footer__social {
+  display: flex;
+  gap: 12px;
+}
+
+.site-footer__social-link {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgb(var(--color-accent));
+  display: grid;
+  place-items: center;
+  color: rgb(var(--color-accent));
+}
+
+.site-footer__social-link:hover {
+  background: rgb(var(--color-accent));
+  color: #fff;
+}

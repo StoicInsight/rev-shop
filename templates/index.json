@@ -1,0 +1,35 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {}
+    },
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "b1": { "type": "text", "settings": { "text": "Numbered edition" } },
+        "b2": { "type": "text", "settings": { "text": "Free shipping over $75" } },
+        "b3": { "type": "text", "settings": { "text": "Heavyweight brushed fleece" } },
+        "b4": { "type": "text", "settings": { "text": "Restocks never" } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4"]
+    },
+    "featured-collection": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "The",
+        "heading_italic": "New Drop"
+      }
+    },
+    "brand-story": {
+      "type": "brand-story",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "number": "500", "label": "Per style" } },
+        "s2": { "type": "stat", "settings": { "number": "380", "label": "GSM fleece" } },
+        "s3": { "type": "stat", "settings": { "number": "01", "label": "Drop number" } }
+      },
+      "block_order": ["s1", "s2", "s3"]
+    }
+  },
+  "order": ["hero", "announcement-bar", "featured-collection", "brand-story"]
+}

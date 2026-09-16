@@ -1,0 +1,42 @@
+<div class="section-pad account-section">
+  <div class="page-width account-narrow">
+    <div class="account-panel">
+      <h1 class="font-heading account-panel__title">{{ 'customer.register.title' | t }}</h1>
+
+      {% form 'create_customer', novalidate: 'novalidate' %}
+        {%- if form.errors -%}
+          <div class="form-error">{{ form.errors.messages.first }}</div>
+        {%- endif -%}
+
+        <div class="account-field-row">
+          <div class="account-field">
+            <label class="font-accent account-label" for="RegisterFirstName">{{ 'customer.register.first_name' | t }}</label>
+            <input class="field" type="text" name="customer[first_name]" id="RegisterFirstName" autocomplete="given-name">
+          </div>
+          <div class="account-field">
+            <label class="font-accent account-label" for="RegisterLastName">{{ 'customer.register.last_name' | t }}</label>
+            <input class="field" type="text" name="customer[last_name]" id="RegisterLastName" autocomplete="family-name">
+          </div>
+        </div>
+
+        <div class="account-field">
+          <label class="font-accent account-label" for="RegisterEmail">{{ 'customer.register.email' | t }}</label>
+          <input class="field" type="email" name="customer[email]" id="RegisterEmail" autocomplete="email" required>
+        </div>
+
+        <div class="account-field">
+          <label class="font-accent account-label" for="RegisterPassword">{{ 'customer.register.password' | t }}</label>
+          <input class="field" type="password" name="customer[password]" id="RegisterPassword" autocomplete="new-password" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">{{ 'customer.register.submit' | t }}</button>
+      {% endform %}
+
+      <a href="{{ routes.account_login_url }}" class="underline-link account-panel__toggle">{{ 'customer.log_in' | t }}</a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Register", "settings": [] }
+{% endschema %}

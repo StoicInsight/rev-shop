@@ -1,0 +1,84 @@
+{%- comment -%}
+  Renders a product card. Params: product, index (card number, optional).
+{%- endcomment -%}
+{%- liquid
+  assign card_index = index | default: forloop.index | default: 1
+  assign available = product.available
+  assign on_sale = false
+  if product.compare_at_price_min > product.price_min
+    assign on_sale = true
+  endif
+  assign is_new = false
+  if product.tags contains 'new'
+    assign is_new = true
+  endif
+  assign low_stock = false
+  assign first_variant = product.selected_or_first_available_variant
+  if available and first_variant.inventory_management != blank and first_variant.inventory_quantity <= 10 and first_variant.inventory_quantity > 0
+    assign low_stock = true
+  endif
+  assign badge_label = ''
+  if available == false
+    assign badge_label = 'products.product.sold_out' | t
+  elsif low_stock
+    assign badge_label = 'products.product.low_stock' | t
+  elsif on_sale
+    assign badge_label = 'products.product.on_sale' | t
+  elsif is_new
+    assign badge_label = 'products.product.new' | t
+  endif
+  assign subtitle = product.metafields.custom.subtitle | default: product.type
+-%}
+<div class="product-card">
+  <div class="product-card__meta-row font-accent">
+    <span>{% if card_index < 10 %}0{{ card_index }}{% else %}{{ card_index }}{% endif %}</span>
+    {%- if badge_label != '' -%}<span class="product-card__badge">{{ badge_label }}</span>{%- endif -%}
+  </div>
+
+  <a href="{{ product.url }}" class="product-card__media">
+    <span class="dot-field" aria-hidden="true"></span>
+    {%- if product.featured_image -%}
+      <img
+        src="{{ product.featured_image | image_url: width: 700 }}"
+        srcset="{{ product.featured_image | image_url: width: 400 }} 400w, {{ product.featured_image | image_url: width: 700 }} 700w, {{ product.featured_image | image_url: width: 1000 }} 1000w"
+        sizes="(min-width: 990px) 320px, 50vw"
+        alt="{{ product.featured_image.alt | default: product.title | escape }}"
+        loading="lazy"
+        width="700" height="875"
+        class="product-card__img"
+      >
+      {%- if product.images[1] -%}
+        <img
+          src="{{ product.images[1] | image_url: width: 700 }}"
+          alt=""
+          loading="lazy"
+          width="700" height="875"
+          class="product-card__img product-card__img--hover"
+        >
+      {%- endif -%}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'product-card__placeholder' }}
+    {%- endif -%}
+  </a>
+
+  <div class="product-card__row">
+    <a href="{{ product.url }}" class="product-card__title font-heading">{{ product.title }}</a>
+    {% render 'price', product: product, show_compare: false %}
+  </div>
+
+  {%- if subtitle != blank -%}
+    <div class="product-card__subtitle font-accent">{{ subtitle }}</div>
+  {%- endif -%}
+
+  <a
+    href="{{ product.url }}"
+    class="btn btn-outline btn-block product-card__cta"
+    {% unless available %}aria-disabled="true"{% endunless %}
+  >
+    {%- if available -%}
+      {{ 'products.product.choose_options' | t }}
+    {%- else -%}
+      {{ 'products.product.sold_out' | t }}
+    {%- endif -%}
+  </a>
+</div>
